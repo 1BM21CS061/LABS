@@ -1,0 +1,82 @@
+use mysql;
+create database cs061_insurance;
+
+
+create table person(
+driver_id int PRIMARY KEY,
+namep char(30) not null,
+address char(30) not null
+);
+
+desc person;
+
+create table car(
+reg_id int PRIMARY KEY,
+model char(30) not null,
+yearp int
+);
+
+desc car;
+
+create table accident(
+report_num int PRIMARY KEY,
+accident_date date,
+locaion char(30) not null
+);
+
+desc accident;
+
+create table owns(
+driver_id int,
+reg_id int,
+FOREIGN KEY(driver_id) REFERENCES person(driver_id),
+FOREIGN KEY(reg_id) REFERENCES car(reg_id)
+);
+
+desc owns;
+
+create table participated(
+driver_id int,
+reg_id int,
+report_num int,
+damage_amount int,
+foreign key(driver_id) references person(driver_id),
+foreign key(reg_id) references car(reg_id),
+foreign key(report_num) references accident(report_num)
+);
+
+desc participated;
+
+insert into person values(01,'Richard','Srinivas Nagar');
+insert into person values(02,'Pradeep','Rajaji Nagar');
+insert into person values(03,'Smith','Ashok Nagar');
+insert into person values(04,'Venu','NR Colony');
+insert into person values(05,'Jhon','Hanumanth Nagar');
+
+INSERT INTO car values(052250,'INDICA',1990);
+INSERT INTO car values(031181,'LANCER',1957);
+INSERT INTO car values(095477,'TOYOTA',1998);
+INSERT INTO car values(053408,'HONDA',2008);
+INSERT INTO car values(041702,'AUDI',2005);
+
+select * from car;
+
+insert into accident values(11,'2003-01-01','mYSORE road');
+insert into accident values(12,'2004-02-02','south end circle');
+insert into accident values(13,'2003-01-21','bull temple road');
+insert into accident values(14,'2008-02-17','mYSORE road');
+insert into accident values(15,'2005-03-04','mYSORE road');
+
+insert into owns values(01,052250);
+insert into owns values(02,053408);
+insert into owns values(03,095477);
+insert into owns values(04,031181);
+insert into owns values(05,041702);
+
+select * from owns;
+
+insert into participated values(01,052250,11,10000);
+insert into participated values(02,053408,12,50000);
+insert into participated values(03,095477,13,25000);
+insert into participated values(04,031181,14,3000);
+insert into participated values(05,041702,15,5000);
